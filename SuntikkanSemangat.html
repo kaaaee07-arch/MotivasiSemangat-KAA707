@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruang Diri - Semangat Untukmu - KAA707</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Quicksand:wght@400;500;700&display=swap');
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+            --primary-color: #6C63FF;
+            --secondary-color: #FF6584;
+            --accent-color: #36D1DC;
+            --success-color: #4CC9F0;
+            --dark-bg: #0f0c29;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            border-right-color: var(--accent-color);
+            border-bottom-color: var(--secondary-color);
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Quicksand', sans-serif;
+            text-align: center;
+        }
+
+        .loader-subtext {
+            margin-top: 10px;
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        /* Particle Background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Cursor Effect */
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(108, 99, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            max-width: 100%;
+        }
+
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            min-height: 100vh;
+            color: var(--text-color);
+            overflow-x: hidden !important;
+            position: relative;
+        }
+
+        /* Background Animation Keyframes */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating Shapes for aesthetics */
+        .shape {
+            position: absolute;
+            filter: blur(60px);
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+            border-radius: 50%;
+            opacity: 0.4;
+            max-width: 100%;
+        }
+        .shape-1 {
+            width: 300px; height: 300px; background: var(--primary-color); top: 5%; left: 5%; 
+        }
+        .shape-2 {
+            width: 400px; height: 400px; background: var(--secondary-color); bottom: 5%; right: 10%; animation-delay: 2s;
+        }
+        .shape-3 {
+            width: 200px; height: 200px; background: var(--accent-color); top: 60%; left: 80%; animation-delay: 4s;
+        }
+
+        /* New Floating Elements */
+        .floating-element {
+            position: absolute;
+            z-index: 2;
+            opacity: 0.7;
+            animation: floatElement 15s ease-in-out infinite;
+        }
+
+        .floating-element-1 {
+            top: 15%;
+            right: 8%;
+            font-size: 2rem;
+            color: var(--primary-color);
+            animation-delay: 0s;
+        }
+
+        .floating-element-2 {
+            bottom: 25%;
+            left: 8%;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            animation-delay: 3s;
+        }
+
+        .floating-element-3 {
+            top: 50%;
+            right: 15%;
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            animation-delay: 6s;
+        }
+
+        @keyframes floatElement {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-25px) rotate(5deg); }
+            66% { transform: translateY(15px) rotate(-5deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-5deg); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 0 20px;
+            width: 100%;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            font-family: 'Quicksand', sans-serif;
+            text-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        /* Glowing Text Effect */
+        .glow-text {
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(108, 99, 255, 0.5),
+                           0 0 20px rgba(108, 99, 255, 0.3),
+                           0 0 30px rgba(108, 99, 255, 0.1);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(108, 99, 255, 0.8),
+                           0 0 25px rgba(54, 209, 220, 0.5),
+                           0 0 35px rgba(54, 209, 220, 0.2);
+            }
+        }
+
+        /* Main Section - Glassmorphism */
+        .main-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .main-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.3);
+        }
+
+        /* Quote Section */
+        .quote-box {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            position: relative;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            opacity: 0.8;
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 300px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+        }
+
+        /* Breathing Animation Section */
+        .breathing-section {
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+        }
+
+        .breathe-text {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .breathing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            box-shadow: 0 0 30px rgba(54, 209, 220, 0.6);
+            animation: breathe 4s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.7; box-shadow: 0 0 30px rgba(54, 209, 220, 0.6); }
+            50% { transform: scale(1.8); opacity: 1; box-shadow: 0 0 50px rgba(54, 209, 220, 0.9); }
+        }
+
+        .breath-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 10px;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(54, 209, 220, 0.5);
+        }
+
+        /* Features Section */
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            margin: 40px 0;
+            width: 100%;
+        }
+
+        .progress-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .progress-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid var(--glass-border);
+            width: 100%;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.15) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.15) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: progressStripe 1s linear infinite;
+        }
+
+        @keyframes progressStripe {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .heart {
+            color: var(--secondary-color);
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.85rem;
+            }
+            
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .floating-element {
+                display: none;
+            }
+            
+            .shape-1, .shape-2, .shape-3 {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .quote-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loader-text glow-text">Memuat Ruang Diri...</div>
+        <div class="loader-subtext">Persiapkan dirimu untuk energi positif</div>
+    </div>
+
+    <!-- Audio Element untuk musik -->
+    <audio id="background-music" loop preload="auto">
+        <!-- 
+        GANTI SUMBER MUSIK DI SINI:
+        Ganti "music-url.mp3" dengan URL yang Anda inginkan
+        Contoh: 
+        <source src="https://www.example.com/music/relaxing.mp3" type="audio/mpeg">
+        -->
+        <source src="Sean Paul - She Doesn't Mind (Lyrics).mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Particle Background -->
+    <canvas id="particles"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating-element floating-element-1">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="floating-element floating-element-2">
+        <i class="fas fa-heart"></i>
+    </div>
+    <div class="floating-element floating-element-3">
+        <i class="fas fa-feather-alt"></i>
+    </div>
+
+    <!-- Floating Shapes -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTopBtn">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 class="logo">Ruang Diri</h1>
+            <p class="subtitle" id="greeting">Tempat untuk mengisi energi positif, menemukan semangat, dan mencintai dirimu sendiri. Kamu adalah yang terbaik!</p>
+        </header>
+
+        <div class="main-section">
+            <div class="glass-card">
+                <div class="quote-box">
+                    <p class="quote-text" id="quote">"Progress kecil tetaplah progress. Jangan berhenti melangkah."</p>
+                    <p class="quote-author" id="quote-author">- KAA707</p>
+                </div>
+
+                <button class="btn btn-primary" onclick="newQuote()">
+                    <i class="fas fa-bolt"></i> Suntikan Semangat
+                </button>
+                
+                <button class="btn" onclick="playMusic()" id="music-btn">
+                    <i class="fas fa-music"></i> Musik Inspiratif
+                </button>
+                
+                <button class="btn" onclick="showAffirmation()">
+                    <i class="fas fa-heart"></i> Afirmasi Positif
+                </button>
+            </div>
+
+            <div class="glass-card">
+                <div class="breathing-section">
+                    <h3 style="margin-bottom: 15px;">Meditasi Pernapasan</h3>
+                    <p class="breathe-text">Tarik napas dalam-dalam saat bola membesar, hembuskan perlahan saat bola mengecil.</p>
+                    
+                    <div class="breathing-container">
+                        <div class="circle" id="breathing-circle">
+                            <span id="breath-text">Tarik</span>
+                        </div>
+                        <div class="breath-status" id="breath-status">Tarik napas...</div>
+                    </div>
+                    
+                    <button class="btn" onclick="toggleBreathing()" id="breath-btn" style="margin-top: 20px;">
+                        <i class="fas fa-play"></i> Mulai Meditasi
+                    </button>
+                </div>
+                
+                <div style="margin-top: 25px;">
+                    <h4 style="margin-bottom: 15px;">Energi Positif Hari Ini</h4>
+                    <div class="progress-container" style="margin: 0;">
+                        <div class="progress-text">
+                            <span>Level Semangat</span>
+                            <span id="progress-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <button class="btn" onclick="increaseEnergy()">
+                            <i class="fas fa-battery-full"></i> Tambah Energi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">Pikiran Positif</h3>
+                <p class="feature-desc">Setiap hari adalah kesempatan baru untuk tumbuh. Fokus pada hal-hal baik dalam hidupmu dan bersyukur.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3 class="feature-title">Tetap Fokus</h3>
+                <p class="feature-desc">Ingatlah tujuanmu. Setiap langkah kecil membawamu lebih dekat ke impian yang ingin kau raih.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-feather-alt"></i>
+                </div>
+                <h3 class="feature-title">Bangkit Kembali</h3>
+                <p class="feature-desc">Kegagalan bukan akhir dari segalanya. Itu adalah pelajaran berharga untuk menjadi versi terbaik dirimu.</p>
+            </div>
+        </section>
+
+        <div class="progress-section">
+            <h2 class="progress-title">Pencapaian Mingguan</h2>
+            <div class="progress-container">
+                <p style="text-align: center; margin-bottom: 20px;">Seberapa banyak kamu sudah menghargai diri sendiri minggu ini?</p>
+                <div class="progress-text">
+                    <span>Self-Love Meter</span>
+                    <span id="selflove-percentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="selflove-fill" style="background: linear-gradient(90deg, var(--secondary-color), #FF9A9E);"></div>
+                </div>
+                <button class="btn" onclick="increaseSelfLove()" style="margin-top: 15px;">
+                    <i class="fas fa-heartbeat"></i> Tambah Self-Love
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            <p style="margin-top: 10px;">Ingat: Kamu adalah karya terindah yang sedang dalam proses. Teruslah berkembang dan cintai dirimu!</p>
+            <p>Pencipta | KAA707</p>
+        </footer>
+    </div>
+
+    <script>
+        // Wait for page to load
+        window.addEventListener('load', function() {
+            // Hide loading screen with animation
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.style.opacity = '0';
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                    // Initialize other features after loading
+                    initParticles();
+                    initCursor();
+                    initScrollTop();
+                }, 500);
+            }, 1500);
+        });
+
+        // Data Quotes (Fokus pada Diri Sendiri) - TOTAL 20 QUOTES
+        const quotes = [
+            {
+                text: "Jangan bandingkan prosesmu dengan orang lain. Bunga tidak mekar secara bersamaan.",
+                author: "KAA707"
+            },
+            {
+                text: "Istirahatlah jika lelah, tapi jangan pernah menyerah. Kamu lebih kuat dari yang kamu kira.",
+                author: "KAA707"
+            },
+            {
+                text: "Versi terbaik dirimu sedang menunggumu di masa depan. Teruslah berjalan meski langkahmu kecil.",
+                author: "KAA707"
+            },
+            {
+                text: "Kamu tidak harus sempurna untuk menjadi hebat. Cukup jadi dirimu yang terus berkembang.",
+                author: "KAA707"
+            },
+            {
+                text: "Satu-satunya orang yang harus kamu kalahkan adalah dirimu di hari kemarin.",
+                author: "KAA707"
+            },
+            {
+                text: "Kesalahan adalah bukti bahwa kamu sedang mencoba sesuatu. Itu tanda keberanian, bukan kegagalan.",
+                author: "KAA707"
+            },
+            {
+                text: "Cintai dirimu sendiri. Itu adalah awal dari romansa seumur hidup.",
+                author: "KAA707"
+            },
+            {
+                text: "Fokus pada apa yang bisa kamu kendalikan, lepaskan apa yang tidak bisa.",
+                author: "KAA707"
+            },
+            {
+                text: "Hari ini berat? Tidak apa-apa. Kamu sudah bertahan sejauh ini, itu hebat.",
+                author: "KAA707"
+            },
+            {
+                text: "Investasi terbaik adalah investasi pada diri sendiri.",
+                author: "KAA707"
+            },
+            {
+                text: "Mimpi besar dimulai dari langkah kecil yang konsisten.",
+                author: "KAA707"
+            },
+            {
+                text: "Percayalah pada dirimu sendiri. Kamu lebih berani dari yang kau kira, lebih berbakat dari yang kau tahu.",
+                author: "KAA707"
+            },
+            {
+                text: "Hidup bukan tentang menunggu badai berlalu, tetapi tentang belajar menari di tengah hujan.",
+                author: "KAA707"
+            },
+            // QUOTES BARU (7 tambahan untuk total 20)
+            {
+                text: "Kesuksesan terbesar adalah menjadi diri sendiri di dunia yang terus mencoba membuatmu menjadi orang lain.",
+                author: "KAA707"
+            },
+            {
+                text: "Setiap hari adalah halaman baru. Tulislah kisah yang ingin kamu kenang selamanya.",
+                author: "KAA707"
+            },
+            {
+                text: "Jangan takut gagal. Takutlah pada peluang yang terlewat karena tidak mencoba.",
+                author: "KAA707"
+            },
+            {
+                text: "Kekuatanmu tidak diukur dari seberapa jarang kamu jatuh, tapi dari seberapa cepat kamu bangkit.",
+                author: "KAA707"
+            },
+            {
+                text: "Masa depan tergantung pada apa yang kamu lakukan hari ini, bukan besok.",
+                author: "KAA707"
+            },
+            {
+                text: "Kamu memiliki segala yang dibutuhkan untuk sukses. Percayalah pada instingmu.",
+                author: "KAA707"
+            },
+            {
+                text: "Keindahan hidup terletak pada perjalanannya, bukan hanya tujuan akhirnya.",
+                author: "KAA707"
+            }
+        ];
+
+        // Data Afirmasi Positif
+        const affirmations = [
+            "Aku layak mendapatkan kebahagiaan dan kesuksesan.",
+            "Aku percaya pada kemampuan diriku sendiri.",
+            "Hari ini adalah kesempatan untuk menjadi lebih baik.",
+            "Aku kuat, aku mampu, dan aku akan berhasil.",
+            "Setiap langkah kecil membawaku lebih dekat ke impianku.",
+            "Aku memancarkan energi positif dan menarik hal-hal baik.",
+            "Aku bersyukur atas diriku dan semua yang kumiliki.",
+            "Aku memilih untuk fokus pada solusi, bukan masalah.",
+            "Aku adalah pencipta takdirku sendiri.",
+            "Hari ini, aku akan memberikan yang terbaik dari diriku.",
+            "Aku mencintai dan menerima diriku sepenuhnya.",
+            "Aku berharga dan pantas dicintai.",
+            "Aku melepaskan semua keraguan dan ketakutan.",
+            "Setiap hari aku menjadi lebih baik dan lebih kuat."
+        ];
+
+        // VARIABEL MUSIK
+        let isMusicPlaying = false;
+        const musicPlayer = document.getElementById('background-music');
+        
+        // Fungsi untuk memutar musik
+        function playMusic() {
+            const musicBtn = document.getElementById('music-btn');
+            
+            if (!isMusicPlaying) {
+                // Mulai memutar musik
+                musicPlayer.play().then(() => {
+                    isMusicPlaying = true;
+                    musicBtn.innerHTML = '<i class="fas fa-pause"></i> Hentikan Musik';
+                    musicBtn.classList.add('btn-primary');
+                    
+                    showNotification("🎵 Musik inspiratif dimulai. Dengarkan sambil beraktivitas!");
+                }).catch(error => {
+                    showNotification("❌ Gagal memutar musik. Pastikan file musik tersedia dan browser memiliki izin!");
+                    console.error("Error playing music:", error);
+                    
+                    // Fallback: coba metode alternatif
+                    try {
+                        musicPlayer.src = "Sean Paul - She Doesn't Mind (Lyrics).mp3";
+                        musicPlayer.load();
+                        musicPlayer.play().then(() => {
+                            isMusicPlaying = true;
+                            musicBtn.innerHTML = '<i class="fas fa-pause"></i> Hentikan Musik';
+                            musicBtn.classList.add('btn-primary');
+                            showNotification("🎵 Musik inspiratif dimulai!");
+                        }).catch(e => {
+                            console.error("Fallback juga gagal:", e);
+                            showNotification("⚠️ Musik tidak dapat diputar. Pastikan file musik berada di folder yang sama dengan file HTML.");
+                        });
+                    } catch (e) {
+                        console.error("Error in fallback:", e);
+                    }
+                });
+            } else {
+                // Hentikan musik
+                musicPlayer.pause();
+                isMusicPlaying = false;
+                musicBtn.innerHTML = '<i class="fas fa-music"></i> Musik Inspiratif';
+                musicBtn.classList.remove('btn-primary');
+                
+                showNotification("⏸️ Musik inspiratif dihentikan.");
+            }
+        }
+
+        // Fungsi untuk mengganti musik (jika diperlukan)
+        function changeMusic(newMusicUrl) {
+            if (isMusicPlaying) {
+                musicPlayer.pause();
+                isMusicPlaying = false;
+                const musicBtn = document.getElementById('music-btn');
+                musicBtn.innerHTML = '<i class="fas fa-music"></i> Musik Inspiratif';
+                musicBtn.classList.remove('btn-primary');
+            }
+            
+            musicPlayer.src = newMusicUrl;
+            musicPlayer.load();
+            showNotification("🔄 Musik telah diganti. Tekan tombol untuk memutar.");
+        }
+
+        // Particle Background
+        function initParticles() {
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null, radius: 100 };
+
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.color = `rgba(${Math.floor(Math.random() * 100 + 100)}, ${Math.floor(Math.random() * 100 + 150)}, 255, 0.5)`;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    // Bounce off walls
+                    if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                    if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+
+                    // Mouse interaction
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= dx * force * 0.05;
+                        this.y -= dy * force * 0.05;
+                    }
+                }
+
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Initialize particles
+            function init() {
+                particles = [];
+                const numberOfParticles = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 150);
+                
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let particle of particles) {
+                    particle.update();
+                    particle.draw();
+                }
+                
+                // Connect particles with lines
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance/100)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+
+            // Mouse movement
+            window.addEventListener('mousemove', function(event) {
+                mouse.x = event.x;
+                mouse.y = event.y;
+            });
+
+            // Initialize
+            resizeCanvas();
+            init();
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                resizeCanvas();
+                init();
+            });
+        }
+
+        // Custom Cursor
+        function initCursor() {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+            
+            document.addEventListener('mousemove', function(e) {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                
+                setTimeout(() => {
+                    cursorRing.style.left = e.clientX + 'px';
+                    cursorRing.style.top = e.clientY + 'px';
+                }, 50);
+            });
+            
+            // Cursor effects on hover
+            const interactiveElements = document.querySelectorAll('button, .glass-card, .feature-card');
+            
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorDot.style.width = '16px';
+                    cursorDot.style.height = '16px';
+                    cursorRing.style.width = '40px';
+                    cursorRing.style.height = '40px';
+                    cursorRing.style.borderColor = 'rgba(108, 99, 255, 0.8)';
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursorDot.style.width = '8px';
+                    cursorDot.style.height = '8px';
+                    cursorRing.style.width = '30px';
+                    cursorRing.style.height = '30px';
+                    cursorRing.style.borderColor = 'rgba(108, 99, 255, 0.5)';
+                });
+            });
+        }
+
+        // Scroll to Top Button
+        function initScrollTop() {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('show');
+                } else {
+                    scrollTopBtn.classList.remove('show');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Ganti Sapaan Berdasarkan Waktu
+        function setGreeting() {
+            const hour = new Date().getHours();
+            const greetingElement = document.getElementById('greeting');
+            let greeting = "Tempat untuk mengisi energi positif, menemukan semangat, dan mencintai dirimu sendiri. Kamu adalah yang terbaik!";
+            let timeGreeting = "";
+
+            if (hour >= 5 && hour < 12) {
+                timeGreeting = "Selamat Pagi, Pejuang! ";
+            } else if (hour >= 12 && hour < 15) {
+                timeGreeting = "Selamat Siang, Pemenang! ";
+            } else if (hour >= 15 && hour < 18) {
+                timeGreeting = "Selamat Sore, Inspirasi! ";
+            } else {
+                timeGreeting = "Selamat Malam, Hebat! ";
+            }
+            
+            greetingElement.innerText = timeGreeting + "Tempat untuk mengisi energi positif, menemukan semangat, dan mencintai dirimu sendiri. Kamu adalah yang terbaik!";
+        }
+
+        // Generate Quote Baru
+        function newQuote() {
+            const quoteElement = document.getElementById('quote');
+            const authorElement = document.getElementById('quote-author');
+            
+            // Efek fade out
+            quoteElement.style.opacity = 0;
+            authorElement.style.opacity = 0;
+            
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                quoteElement.innerText = `"${quotes[randomIndex].text}"`;
+                authorElement.innerText = `- ${quotes[randomIndex].author}`;
+                
+                // Efek fade in
+                quoteElement.style.opacity = 1;
+                authorElement.style.opacity = 1;
+                
+                // Efek visual pada tombol
+                const btn = document.querySelector('.btn-primary');
+                btn.innerHTML = '<i class="fas fa-bolt"></i> Semangat Baru!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-bolt"></i> Suntikan Semangat';
+                }, 1500);
+                
+            }, 300);
+        }
+
+        // Tampilkan Afirmasi Positif
+        function showAffirmation() {
+            const randomIndex = Math.floor(Math.random() * affirmations.length);
+            const affirmation = affirmations[randomIndex];
+            
+            // Buat elemen modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: linear-gradient(135deg, rgba(108, 99, 255, 0.9), rgba(54, 209, 220, 0.9));
+                padding: 40px;
+                border-radius: 20px;
+                max-width: 500px;
+                text-align: center;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+                animation: float 3s ease-in-out infinite;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            `;
+            
+            const affirmationText = document.createElement('p');
+            affirmationText.textContent = affirmation;
+            affirmationText.style.cssText = `
+                font-size: 1.5rem;
+                color: white;
+                font-weight: bold;
+                margin-bottom: 25px;
+                font-family: 'Quicksand', sans-serif;
+                line-height: 1.5;
+            `;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Terima dan Lanjutkan';
+            closeBtn.style.cssText = `
+                background: white;
+                color: #6C63FF;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 50px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: transform 0.3s;
+                font-size: 1rem;
+            `;
+            
+            closeBtn.addEventListener('mouseover', () => {
+                closeBtn.style.transform = 'scale(1.05)';
+            });
+            
+            closeBtn.addEventListener('mouseout', () => {
+                closeBtn.style.transform = 'scale(1)';
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            modalContent.appendChild(affirmationText);
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+
+        // Fitur Pernapasan
+        let isBreathing = false;
+        let breathInterval;
+        let breathCycle = 0;
+        
+        function toggleBreathing() {
+            const breathBtn = document.getElementById('breath-btn');
+            const breathCircle = document.getElementById('breathing-circle');
+            const breathStatus = document.getElementById('breath-status');
+            const breathText = document.getElementById('breath-text');
+            
+            if (!isBreathing) {
+                // Mulai meditasi pernapasan
+                isBreathing = true;
+                breathBtn.innerHTML = '<i class="fas fa-pause"></i> Jeda Meditasi';
+                breathBtn.classList.add('btn-primary');
+                
+                breathCycle = 0;
+                breathStatus.textContent = "Tarik napas...";
+                breathText.textContent = "Tarik";
+                
+                // Animasi pernapasan
+                breathInterval = setInterval(() => {
+                    breathCycle++;
+                    
+                    if (breathCycle % 2 === 1) {
+                        // Fase tarik napas
+                        breathStatus.textContent = "Tarik napas dalam-dalam...";
+                        breathText.textContent = "Tarik";
+                    } else {
+                        // Fase hembuskan napas
+                        breathStatus.textContent = "Hembuskan perlahan...";
+                        breathText.textContent = "Hembus";
+                    }
+                    
+                    // Setiap 8 siklus, tampilkan pesan
+                    if (breathCycle % 8 === 0) {
+                        showNotification("Kamu sudah melakukan 4 putaran pernapasan. Bagus sekali!");
+                    }
+                    
+                }, 4000); // Ganti setiap 4 detik
+                
+            } else {
+                // Hentikan meditasi pernapasan
+                isBreathing = false;
+                clearInterval(breathInterval);
+                breathBtn.innerHTML = '<i class="fas fa-play"></i> Mulai Meditasi';
+                breathBtn.classList.remove('btn-primary');
+                
+                breathStatus.textContent = "Meditasi dihentikan";
+                breathText.textContent = "Mulai";
+            }
+        }
+
+        // Progress Energi
+        let energyLevel = 0;
+        function increaseEnergy() {
+            if (energyLevel < 100) {
+                energyLevel += 10;
+                if (energyLevel > 100) energyLevel = 100;
+                
+                const progressFill = document.getElementById('progress-fill');
+                const progressPercentage = document.getElementById('progress-percentage');
+                
+                progressFill.style.width = `${energyLevel}%`;
+                progressPercentage.textContent = `${energyLevel}%`;
+                
+                // Efek visual
+                const energyBtn = document.querySelectorAll('.btn')[3];
+                energyBtn.innerHTML = `<i class="fas fa-bolt"></i> Energi +10% (${energyLevel}%)`;
+                
+                // Animasi tombol
+                energyBtn.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    energyBtn.style.transform = 'scale(1)';
+                }, 300);
+                
+                // Jika mencapai 100%
+                if (energyLevel === 100) {
+                    showNotification("🎉 LUAR BIASA! Energi positifmu sudah penuh! Hari ini akan menjadi hari yang produktif!");
+                }
+            }
+        }
+
+        // Progress Self-Love
+        let selfLoveLevel = 0;
+        function increaseSelfLove() {
+            if (selfLoveLevel < 100) {
+                selfLoveLevel += 15;
+                if (selfLoveLevel > 100) selfLoveLevel = 100;
+                
+                const selfLoveFill = document.getElementById('selflove-fill');
+                const selfLovePercentage = document.getElementById('selflove-percentage');
+                
+                selfLoveFill.style.width = `${selfLoveLevel}%`;
+                selfLovePercentage.textContent = `${selfLoveLevel}%`;
+                
+                // Tampilkan pesan berbeda berdasarkan level
+                const messages = [
+                    "Langkah pertama mencintai diri!",
+                    "Terus tambah cinta untuk dirimu!",
+                    "Kamu semakin menghargai diri sendiri!",
+                    "Self-love-mu hampir penuh!",
+                    "KAMU LUAR BIASA! Cinta untuk dirimu sudah maksimal!"
+                ];
+                
+                let messageIndex = Math.floor(selfLoveLevel / 20);
+                if (messageIndex > 4) messageIndex = 4;
+                
+                showNotification(messages[messageIndex]);
+                
+                // Jika mencapai 100%
+                if (selfLoveLevel === 100) {
+                    setTimeout(() => {
+                        showNotification("💖 Kamu sudah sepenuhnya mencintai dirimu sendiri! Ini adalah pencapaian terbesar dalam hidup!");
+                    }, 500);
+                }
+            }
+        }
+
+        // Fungsi bantuan: Tampilkan notifikasi
+        function showNotification(message) {
+            // Hapus notifikasi sebelumnya jika ada
+            const existingNotif = document.querySelector('.notification');
+            if (existingNotif) {
+                document.body.removeChild(existingNotif);
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 100;
+                animation: float 2s ease-in-out infinite;
+                max-width: 300px;
+                font-weight: 500;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Hapus notifikasi setelah 4 detik
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 4000);
+        }
+
+        // Inisialisasi
+        setGreeting();
+        
+        // Tambahkan transisi CSS untuk teks quote
+        document.getElementById('quote').style.transition = "opacity 0.5s ease";
+        document.getElementById('quote-author').style.transition = "opacity 0.5s ease";
+        
+        // Tampilkan pesan selamat datang setelah loading
+        setTimeout(() => {
+            showNotification("Selamat datang di Ruang Diri! 💫 Semoga hari ini penuh dengan energi positif!");
+        }, 2000);
+        
+        // Update greeting setiap jam
+        setInterval(setGreeting, 3600000);
+        
+        // Event listener untuk musik
+        musicPlayer.addEventListener('play', function() {
+            console.log("Musik sedang diputar");
+        });
+        
+        musicPlayer.addEventListener('error', function(e) {
+            console.error("Error loading music:", e);
+            showNotification("⚠️ Tidak dapat memuat musik. Pastikan file 'Sean Paul - She Doesn't Mind (Lyrics).mp3' berada di folder yang sama.");
+        });
+    </script>
+</body>
+</html>
